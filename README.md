@@ -79,3 +79,4 @@ Q: Sair do jogo
 Integrantes: 
 
 Daniel Matos Oitaven - 27805
+Rubens Nunes Araújo - 27903
