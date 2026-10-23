@@ -9,14 +9,19 @@ typedef struct {
     int pos[2]; 
     int points;
 } player;
-//start player
+
 void start(player *p) {
     p->skin = '@';
-    p->pos[0] = 1; 
+    p->pos[0] = 1;
     p->pos[1] = 1;
     p->points = 0;
 }
-//mapa
+
+void move(player *p, int y, int x) {
+    p->pos[0] = y; 
+    p->pos[1] = x; 
+}
+
 char mapa[LINHAS][COLUNAS + 1] = {
     "####################",
     "#.............$....#",
@@ -30,7 +35,6 @@ char mapa[LINHAS][COLUNAS + 1] = {
     "####################"
 };
 
-// Função que mostra a posição do player
 void mostrarMapa(player p) {
     for (int i = 0; i < LINHAS; i++) {
         for (int j = 0; j < COLUNAS; j++) {
@@ -42,16 +46,47 @@ void mostrarMapa(player p) {
         }
         printf("\n");
     }
-
     printf("\nItens coletados: %d\n", p.points);
 }
 
 int main() {
-    player meuJogador;
+    player player1;
+    char tecla;
     
-    start(&meuJogador);
+    start(&player1);
     
-    mostrarMapa(meuJogador);
+    while(1) {
+        mostrarMapa(player1);
+        printf("\nMover (WASD) | Sair (Q): ");
+        scanf(" %c", &tecla);
 
+        // posições para os calculos
+        int proxY = player1.pos[0];
+        int proxX = player1.pos[1];
+
+        switch (tecla) {
+            case 'w': case 'W': proxY--; break;
+            case 's': case 'S': proxY++; break; 
+            case 'a': case 'A': proxX--; break; 
+            case 'd': case 'D': proxX++; break;
+            case 'q': case 'Q': 
+                printf("Saindo do jogo...\n");
+                return 0;
+            default:
+                continue; // Ignora teclas inválidas
+        }
+        // verificar se chegou na parede
+        if (mapa[proxY][proxX] != '#') {
+            // verificar se é um item e suas ações
+            if (mapa[proxY][proxX] == '$') {
+                player1.points++;
+                mapa[proxY][proxX] = '.'; 
+            }
+            
+            // atualiza a posição na matriz do mapa
+            move(&player1, proxY, proxX);
+
+        }
+    }
     return 0;
 }
