@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define LINHAS 10
 #define COLUNAS 20
@@ -56,6 +57,7 @@ int main() {
     start(&player1);
     
     while(1) {
+        system("cls");
         mostrarMapa(player1);
         printf("\nMover (WASD) | Sair (Q): ");
         scanf(" %c", &tecla);
