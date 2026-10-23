@@ -61,7 +61,7 @@ Execução:
 
 Windows (Command Prompt / PowerShell):
 
-joguin.exe
+Jogo.exe
 
 
 Controles
