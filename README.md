@@ -80,3 +80,4 @@ Q: Sair do jogo
 
 Daniel Matos Oitaven - 27805
 Rubens Nunes Araújo - 27903
+Pedro Iresi Alves Santos - 27657
