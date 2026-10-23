@@ -76,6 +76,6 @@ D: Mover para a direita
 
 Q: Sair do jogo
 
-Integrantes: 
+## Integrantes: 
 
-Daniel Matos Oitaven - 27805
+**Daniel Matos Oitaven - 27805**
