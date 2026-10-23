@@ -2,11 +2,11 @@
 
 Uma aplicação simples em C desenvolvida para terminal, onde o jogador navega por um mapa 2D, desvia de obstáculos e coleta itens.
 
-Breve Descrição:
+## Breve Descrição:
 
 O projeto consiste em um jogo de labirinto em modo texto no qual o jogador controla um personagem representado pelo símbolo @. O objetivo é explorar o mapa, desviar das paredes (#) e coletar itens ($) para aumentar a pontuação.
 
-Elementos do Mapa:
+## Elementos do Mapa:
 
 @: Jogador
 
@@ -16,7 +16,7 @@ $: Item coletável
 
 .: Espaço livre/caminho percorrível
 
-Estrutura dos Módulos
+## Estrutura dos modulos:
 
 O código atual está contido no arquivo main.c e estruturado da seguinte forma:
 
@@ -46,25 +46,25 @@ Coleta de Itens: Atualiza o contador e remove o item ($) do mapa ao passar por e
 
 Instruções de Compilação e Execução
 
-Pré-requisitos
+## Pré-requisitos
 
 Um compilador C instalado (como gcc ou clang).
 
-Compilação
+## Compilação:
 
 Para compilar o arquivo joguin.c, abra o terminal na pasta do arquivo e execute:
 
 gcc main.c -o Jogo
 
 
-Execução:
+## Execução:
 
 Windows (Command Prompt / PowerShell):
 
 Jogo.exe
 
 
-Controles
+## Controles:
 
 W: Mover para cima
 
