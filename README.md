@@ -44,7 +44,7 @@ Validação de Movimento: Verifica limites do mapa e colisões com obstáculos (
 
 Coleta de Itens: Atualiza o contador e remove o item ($) do mapa ao passar por ele.
 
-Instruções de Compilação e Execução
+# Instruções de Compilação e Execução
 
 ## Pré-requisitos
 
