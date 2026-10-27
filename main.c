@@ -1,7 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <conio.h>
+
+#ifdef _WIN32
+    #include <conio.h>
+    #define LIMPAR_TELA "cls"
+#else
+    #include <termios.h>
+    #include <unistd.h>
+    #define LIMPAR_TELA "clear"
+#endif
 
 #define LINHAS 10
 #define COLUNAS 20
@@ -122,6 +130,21 @@ void exibirResultados(player p, time_t inicio) {
     printf("=================================\n");
 }
 
+char lerTecla() {
+#ifdef _WIN32
+    return _getch();
+#else
+    struct termios antigo, novo;
+    tcgetattr(STDIN_FILENO, &antigo);         
+    novo = antigo;
+    novo.c_lflag &= ~(ICANON | ECHO);         
+    tcsetattr(STDIN_FILENO, TCSANOW, &novo);
+    char c = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &antigo);
+    return c;
+#endif
+}
+
 int main(void) {
     Player player1;
     char tecla;
@@ -133,15 +156,12 @@ int main(void) {
     time_t inicio = time(NULL);
 
     while (1) {
-        #ifdef _WIN32
-            system("cls");
-        #else 
-            system("clear");
-        #endif
+        system(LIMPAR_TELA);
 
         mostrarMapa(&player1);
 
         printf("\nMover (WASD) | Sair (Q): ");
+        tecla = lerTecla();
 
         if (scanf(" %c", &tecla) != 1) {
             break;
