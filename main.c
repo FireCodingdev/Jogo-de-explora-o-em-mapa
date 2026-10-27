@@ -118,7 +118,7 @@ void coletarItem(Player *p, int y, int x) {
     }
 }
 
-void exibirResultados(player p, time_t inicio) {
+void exibirResultados(Player p, time_t inicio) {
     time_t fim = time(NULL);
     int totalSegundos = (int)difftime(fim, inicio);
     int minutos = totalSegundos / 60;
@@ -190,7 +190,7 @@ int main(void) {
             case 'q':
             case 'Q':
                 printf("Saindo do jogo...\n");
-                exibirResultados(Player1, inicio);
+                exibirResultados(player1, inicio);
                 return 0;
 
             default:
