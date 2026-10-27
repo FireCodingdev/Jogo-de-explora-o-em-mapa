@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <conio.h>
 
 #define LINHAS 10
 #define COLUNAS 20
@@ -109,6 +110,18 @@ void coletarItem(Player *p, int y, int x) {
     }
 }
 
+void exibirResultados(player p, time_t inicio) {
+    time_t fim = time(NULL);
+    int totalSegundos = (int)difftime(fim, inicio);
+    int minutos = totalSegundos / 60;
+    int segundos = totalSegundos % 60;
+
+    printf("\n===== RESULTADOS DA PARTIDA =====\n");
+    printf("Itens coletados: %d\n", p.points);
+    printf("Tempo de partida: %02d:%02d\n", minutos, segundos);
+    printf("=================================\n");
+}
+
 int main(void) {
     Player player1;
     char tecla;
@@ -117,6 +130,7 @@ int main(void) {
 
     iniciarMapa();
     start(&player1);
+    time_t inicio = time(NULL);
 
     while (1) {
         #ifdef _WIN32
@@ -160,6 +174,7 @@ int main(void) {
             case 'q':
             case 'Q':
                 printf("Saindo do jogo...\n");
+                exibirResultados(player1, inicio);
                 return 0;
 
             default:
