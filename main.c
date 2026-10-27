@@ -163,10 +163,6 @@ int main(void) {
         printf("\nMover (WASD) | Sair (Q): ");
         tecla = lerTecla();
 
-        if (scanf(" %c", &tecla) != 1) {
-            break;
-        }
-
         int proxY = player1.pos[0];
         int proxX = player1.pos[1];
 
