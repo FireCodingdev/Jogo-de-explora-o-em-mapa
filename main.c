@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "tda.h"
+
 
 #ifdef _WIN32
     #include <conio.h>
@@ -14,12 +16,6 @@
 #define LINHAS 10
 #define COLUNAS 20
 
-// TDA Player
-typedef struct {
-    char skin;
-    int pos[2];
-    int points;
-} Player;
 
 char mapa[LINHAS][COLUNAS + 1];
 
