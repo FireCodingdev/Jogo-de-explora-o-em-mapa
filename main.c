@@ -119,7 +119,11 @@ int main(void) {
     start(&player1);
 
     while (1) {
-        system("cls");
+        #ifdef _WIN32
+            system("cls");
+        #else 
+            system("clear");
+        #endif
 
         mostrarMapa(&player1);
 
