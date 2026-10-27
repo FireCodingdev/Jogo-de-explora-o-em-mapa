@@ -194,7 +194,7 @@ int main(void) {
             case 'q':
             case 'Q':
                 printf("Saindo do jogo...\n");
-                exibirResultados(player1, inicio);
+                exibirResultados(Player1, inicio);
                 return 0;
 
             default:
