@@ -3,7 +3,7 @@
 #include <time.h>
 #include "tda.h"
 
-#define LINHAS 22
+#define LINHAS 23
 #define COLUNAS 20
 #define NUM_BLOCOS 5
 
