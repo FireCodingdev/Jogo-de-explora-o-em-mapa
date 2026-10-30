@@ -13,7 +13,8 @@ typedef struct {
     int n;
     const char *linhas[6];
 } Bloco;
-/* mapas pré carregados para a geração continua
+/* mapas pré carregados para a geração continua */
+
 static const Bloco blocos[NUM_BLOCOS] = {
 
     { 5, {
