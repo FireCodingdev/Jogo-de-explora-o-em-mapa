@@ -3,7 +3,7 @@
 #include <time.h>
 #include "tda.h"
 
-#define LINHAS 10
+#define LINHAS 22
 #define COLUNAS 20
 #define NUM_BLOCOS 5
 
@@ -13,7 +13,7 @@ typedef struct {
     int n;
     const char *linhas[6];
 } Bloco;
-/mapas pré carregados para a geração continua
+/* mapas pré carregados para a geração continua
 static const Bloco blocos[NUM_BLOCOS] = {
 
     { 5, {
