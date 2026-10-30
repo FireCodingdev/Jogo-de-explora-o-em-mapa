@@ -79,9 +79,6 @@ static const Bloco blocos[NUM_BLOCOS] = {
     } }
 };
 
-static int blocoAtual = -1;   /* -1 = comeca por um corredor livre */
-static int linhaAtual = 0;
-
 /* Inicializa o mapa original */
 void iniciarMapa(void) {
     char inicial[LINHAS][COLUNAS + 1] = {
@@ -117,36 +114,18 @@ void iniciarMapa(void) {
     }
 }
 
-/* Gera a proxima linha a partir dos blocos prontos */
-void gerarLinha(void) {
 
-    const char *origem;
 
-    if (blocoAtual == -1) {
-        /* Primeira linha nova: corredor livre logo abaixo do mapa inicial */
-        origem = "#..................#";
-        blocoAtual = rand() % NUM_BLOCOS;
-        linhaAtual = 0;
-    }
-    else {
-        origem = blocos[blocoAtual].linhas[linhaAtual];
-        linhaAtual++;
-
-        if (linhaAtual >= blocos[blocoAtual].n) {
-            blocoAtual = rand() % NUM_BLOCOS;
-            linhaAtual = 0;
-        }
-    }
-
+/* Copia uma linha pronta para a ultima linha do mapa */
+static void escreverLinha(const char *origem) {
     for (int j = 0; j < COLUNAS; j++) {
         mapa[LINHAS - 1][j] = origem[j];
     }
-
     mapa[LINHAS - 1][COLUNAS] = '\0';
 }
 
-/* Gera uma nova linha aleatória */
-void gerarLinha(void) {
+/* Gerador original: linha totalmente aleatoria */
+static void gerarLinhaAleatoria(void) {
 
     mapa[LINHAS - 1][0] = '#';
     mapa[LINHAS - 1][COLUNAS - 1] = '#';
@@ -170,6 +149,69 @@ void gerarLinha(void) {
     mapa[LINHAS - 1][COLUNAS / 2] = '.';
 
     mapa[LINHAS - 1][COLUNAS] = '\0';
+}
+
+/* Gerador por blocos: entrega a proxima linha do bloco atual */
+static int blocoAtual = 0;
+static int linhaAtual = 0;
+
+static void gerarLinhaBloco(void) {
+    escreverLinha(blocos[blocoAtual].linhas[linhaAtual]);
+    linhaAtual++;
+}
+
+/* Controle: alterna entre aleatorio e blocos */
+#define MIN_ALEATORIAS 5
+#define MAX_ALEATORIAS 10
+
+typedef enum {
+    FASE_CORREDOR_INICIAL,
+    FASE_ALEATORIA,
+    FASE_CORREDOR_ANTES_BLOCO,
+    FASE_BLOCO
+} Fase;
+
+static Fase fase = FASE_CORREDOR_INICIAL;
+static int restantes = 0;
+
+void gerarLinha(void) {
+
+    const char *corredor = "#..................#";
+
+    switch (fase) {
+
+        case FASE_CORREDOR_INICIAL:
+            escreverLinha(corredor);
+            restantes = MIN_ALEATORIAS +
+                        rand() % (MAX_ALEATORIAS - MIN_ALEATORIAS + 1);
+            fase = FASE_ALEATORIA;
+            break;
+
+        case FASE_ALEATORIA:
+            gerarLinhaAleatoria();
+            restantes--;
+            if (restantes <= 0) {
+                fase = FASE_CORREDOR_ANTES_BLOCO;
+            }
+            break;
+
+        case FASE_CORREDOR_ANTES_BLOCO:
+            escreverLinha(corredor);
+            blocoAtual = rand() % NUM_BLOCOS;
+            linhaAtual = 0;
+            fase = FASE_BLOCO;
+            break;
+
+        case FASE_BLOCO:
+            gerarLinhaBloco();
+            /* O bloco ja termina com um corredor livre */
+            if (linhaAtual >= blocos[blocoAtual].n) {
+                restantes = MIN_ALEATORIAS +
+                            rand() % (MAX_ALEATORIAS - MIN_ALEATORIAS + 1);
+                fase = FASE_ALEATORIA;
+            }
+            break;
+    }
 }
 
 /* Desloca o mapa para cima */
