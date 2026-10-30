@@ -117,6 +117,34 @@ void iniciarMapa(void) {
     }
 }
 
+/* Gera a proxima linha a partir dos blocos prontos */
+void gerarLinha(void) {
+
+    const char *origem;
+
+    if (blocoAtual == -1) {
+        /* Primeira linha nova: corredor livre logo abaixo do mapa inicial */
+        origem = "#..................#";
+        blocoAtual = rand() % NUM_BLOCOS;
+        linhaAtual = 0;
+    }
+    else {
+        origem = blocos[blocoAtual].linhas[linhaAtual];
+        linhaAtual++;
+
+        if (linhaAtual >= blocos[blocoAtual].n) {
+            blocoAtual = rand() % NUM_BLOCOS;
+            linhaAtual = 0;
+        }
+    }
+
+    for (int j = 0; j < COLUNAS; j++) {
+        mapa[LINHAS - 1][j] = origem[j];
+    }
+
+    mapa[LINHAS - 1][COLUNAS] = '\0';
+}
+
 /* Gera uma nova linha aleatória */
 void gerarLinha(void) {
 
