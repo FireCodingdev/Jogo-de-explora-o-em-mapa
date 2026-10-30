@@ -11,7 +11,7 @@ char mapa[LINHAS][COLUNAS + 1];
 
 typedef struct {
     int n;
-    const char *linhas[6];
+    const char *linhas[25];
 } Bloco;
 /* mapas pré carregados para a geração continua */
 
