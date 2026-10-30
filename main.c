@@ -16,7 +16,6 @@ typedef struct {
 /mapas pré carregados para a geração continua
 static const Bloco blocos[NUM_BLOCOS] = {
 
-    /* 0: duas salas, entradas por baixo */
     { 5, {
         "#.##.###....######.#",
         "#.#.#..##...#.#$...#",
@@ -26,7 +25,6 @@ static const Bloco blocos[NUM_BLOCOS] = {
         "#..................#"
     } },
 
-    /* 1: duas salas, entradas por cima */
     { 5, {
         "#.###.####..###.##.#",
         "#.##...#....#$...#.#",
@@ -46,7 +44,6 @@ static const Bloco blocos[NUM_BLOCOS] = {
         "#..................#"
     } },
 
-    /* 2: sala grande, entrada por cima */
     { 6, {
         "#.#######..###.###.#",
         "#.#.....#.....#..###",
@@ -56,7 +53,6 @@ static const Bloco blocos[NUM_BLOCOS] = {
         "#..................#"
     } },
 
-    /* 3: area aberta com pilares e um $ solto */
     { 4, {
         "#..#$#..#$$#..#$#..#",
         "#..#$#..$##$..#$#..#",
@@ -64,7 +60,6 @@ static const Bloco blocos[NUM_BLOCOS] = {
         "#..................#"
     } },
 
-    /* 4: sala grande, entrada pela lateral esquerda (coluna 2) */
     { 6, {
         "#.##################",
         "#.#.........#$.....#",
