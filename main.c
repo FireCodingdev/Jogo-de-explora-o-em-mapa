@@ -10,14 +10,13 @@
 char mapa[LINHAS][COLUNAS + 1];
 
 typedef struct {
-    int n;
     const char *linhas[25];
 } Bloco;
 /* mapas pré carregados para a geração continua */
 
 static const Bloco blocos[NUM_BLOCOS] = {
 
-    { 5, {
+    { {
         "#.##.###....######.#",
         "#.#.#..##...#.#$...#",
         "#.#$...#.#..#..#.#.#",
@@ -26,15 +25,15 @@ static const Bloco blocos[NUM_BLOCOS] = {
         "#..................#"
     } },
 
-    { 5, {
+    { {
         "#.###.####..###.##.#",
         "#.##...#....#$...#.#",
         "#..$##..........$#.#",
         "#.###$###...######.#",
         "#.#....###..###$##.#",
-        "#.#.##.$##..###.##.$",
+        "#.#.##.$##..###.##.#",
         "#.#.#$#$##....#.$#.#",
-        "$.#.#$..##..#$#.##.#",
+        "#.#.#$..##..#$#.##.#",
         "#.#.#$.#....###.##.#",
         "#.#.#$.#.#..##$.##.#",
         "#.#..##..#..###.##.#",
@@ -45,7 +44,7 @@ static const Bloco blocos[NUM_BLOCOS] = {
         "#..................#"
     } },
 
-    { 6, {
+    { {
         "#.#######..###.###.#",
         "#.#.....#.....#..###",
         "#.#..#..#..#.....#.#",
@@ -54,14 +53,14 @@ static const Bloco blocos[NUM_BLOCOS] = {
         "#..................#"
     } },
 
-    { 4, {
+    { {
         "#..#$#..#$$#..#$#..#",
         "#..#$#..$##$..#$#..#",
         "#..#$#..#$$#..#$#..#",
         "#..................#"
     } },
 
-    { 6, {
+    { {
         "#.##################",
         "#.#.........#$.....#",
         "#...##..#...####...#",
@@ -74,6 +73,14 @@ static const Bloco blocos[NUM_BLOCOS] = {
         "#..................#"
     } }
 };
+
+static int tamanhoBloco(const Bloco *b) {
+    int n = 0;
+    while (b->linhas[n] != NULL) {
+        n++;
+    }
+    return n;
+}
 
 /* Inicializa o mapa original */
 void iniciarMapa(void) {
@@ -96,7 +103,7 @@ void iniciarMapa(void) {
         "#....#.##..#..##.#.#",
         "#.#..#..#..#.#.#.#.#",
         "#.#.#.#......#.#.#.#",
-        "#.#.....#....#.#....#",
+        "#.#.....#...#.#....#",
         "#.###...#........#.#",
         "#.....#....#..#....#",
         "#.#.#####.######.#.#",
@@ -201,7 +208,7 @@ void gerarLinha(void) {
         case FASE_BLOCO:
             gerarLinhaBloco();
             /* O bloco ja termina com um corredor livre */
-            if (linhaAtual >= blocos[blocoAtual].n) {
+            if (linhaAtual >= tamanhoBloco(&blocos[blocoAtual])) {
                 restantes = MIN_ALEATORIAS +
                             rand() % (MAX_ALEATORIAS - MIN_ALEATORIAS + 1);
                 fase = FASE_ALEATORIA;
