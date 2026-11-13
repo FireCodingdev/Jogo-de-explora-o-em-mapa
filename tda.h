@@ -8,6 +8,10 @@
 #define LINHAS 23
 #define COLUNAS 20
 
+#define ARQUIVO_RANKING "ranking.txt"
+#define MAX_RANKING 10
+#define TAM_NOME 20
+
 #ifdef _WIN32
 
     #include <conio.h>
@@ -29,6 +33,15 @@ typedef struct {
 
 } Player;
 
+typedef struct {
+
+    char nome[TAM_NOME + 1];
+    int pontos;
+    int segundos;
+
+} Registro;
+
+
 /* Mapa do jogo */
 extern char mapa[LINHAS][COLUNAS + 1];
 
@@ -41,6 +54,13 @@ void coletarItem(Player *p, char mapa[][COLUNAS + 1],
                  int y, int x);
 void exibirResultados(Player p, time_t inicio);
 char lerTecla(void);
+
+/* Funcoes do ranking */
+int carregarRanking(Registro ranking[]);
+int salvarRegistro(const char *nome, int pontos, int segundos);
+void lerNome(char *destino, int tamanho);
+void exibirRanking(void);
+
 
 /* Funcoes do mapa */
 void iniciarMapa(void);

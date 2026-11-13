@@ -1,5 +1,6 @@
 
 #include "tda.h"
+#include <string.h>
 #include <stdlib.h>
 
 // Mapa global 
@@ -97,6 +98,129 @@ char lerTecla(void) {
     return c;
 
 #endif
+}
+
+// ordena por mais pontos; em empate, vence o menor tempo e tal
+static int compararRegistros(const void *a, const void *b) {
+
+    const Registro *ra = (const Registro *)a;
+    const Registro *rb = (const Registro *)b;
+
+    if (rb->pontos != ra->pontos) {
+        return rb->pontos - ra->pontos;
+    }
+
+    return ra->segundos - rb->segundos;
+}
+
+// lee o arquivo e devolve quantos registros foram carregados
+int carregarRanking(Registro ranking[]) {
+
+    FILE *arquivo = fopen(ARQUIVO_RANKING, "r");
+
+    if (arquivo == NULL) {
+        return 0; // ainda nao existe ranking
+    }
+
+    int n = 0;
+    char linha[128];
+
+    while (n < MAX_RANKING && fgets(linha, sizeof(linha), arquivo)) {
+
+        Registro r;
+
+        if (sscanf(linha, "%d;%d;%20[^\r\n]",
+                   &r.pontos, &r.segundos, r.nome) == 3) {
+            ranking[n++] = r;
+        }
+    }
+
+    fclose(arquivo);
+
+    return n;
+}
+
+// Insere a partida, reordena, mantem so o top MAX_RANKING e grava
+// Retorna 1 em caso de sucesso e 0 em caso de falha
+int salvarRegistro(const char *nome, int pontos, int segundos) {
+
+    Registro lista[MAX_RANKING + 1];
+
+    int n = carregarRanking(lista);
+
+    strncpy(lista[n].nome, nome, TAM_NOME);
+    lista[n].nome[TAM_NOME] = '\0';
+    lista[n].pontos = pontos;
+    lista[n].segundos = segundos;
+    n++;
+
+    qsort(lista, n, sizeof(Registro), compararRegistros);
+
+    if (n > MAX_RANKING) {
+        n = MAX_RANKING;
+    }
+
+    FILE *arquivo = fopen(ARQUIVO_RANKING, "w");
+
+    if (arquivo == NULL) {
+        return 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        fprintf(arquivo, "%d;%d;%s\n",
+                lista[i].pontos, lista[i].segundos, lista[i].nome);
+    }
+
+    fclose(arquivo);
+
+    return 1;
+}
+
+// ler o nome do jogador (usa "Anonimo" se ficar vazio)
+void lerNome(char *destino, int tamanho) {
+
+    // Descarta teclas pendentes do buffer de entrada
+#ifdef _WIN32
+    while (_kbhit()) {
+        _getch();
+    }
+#else
+    tcflush(STDIN_FILENO, TCIFLUSH);
+#endif
+
+    if (fgets(destino, tamanho, stdin) == NULL) {
+        destino[0] = '\0';
+    }
+
+    destino[strcspn(destino, "\r\n")] = '\0';
+
+    if (destino[0] == '\0') {
+        strcpy(destino, "Anonimo");
+    }
+}
+
+void exibirRanking(void) {
+
+    Registro lista[MAX_RANKING];
+
+    int n = carregarRanking(lista);
+
+    printf("\n========== RANKING (TOP %d) ==========\n", MAX_RANKING);
+
+    if (n == 0) {
+        printf("Nenhuma partida registrada ainda.\n");
+    }
+    else {
+        printf("%-3s %-*s %6s %7s\n", "#", TAM_NOME, "Nome", "Itens", "Tempo");
+
+        for (int i = 0; i < n; i++) {
+            printf("%-3d %-*s %6d %02d:%02d\n",
+                   i + 1, TAM_NOME, lista[i].nome, lista[i].pontos,
+                   lista[i].segundos / 60, lista[i].segundos % 60);
+        }
+    }
+
+    printf("======================================\n");
 }
 
 // GERACAO DO MAPA
