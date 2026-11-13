@@ -53,8 +53,14 @@ int main(void) {
             case 'q':
             case 'Q': {
 
+                int segundos = (int)difftime(time(NULL), inicio);
+                char nome[TAM_NOME + 1];
+
                 printf("Saindo do jogo...\n");
                 exibirResultados(player1, inicio);
+
+                printf("\nDigite seu nome:");
+                lerNome(nome, sizeof(nome));
 
             }
 
