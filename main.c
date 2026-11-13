@@ -63,7 +63,7 @@ int main(void) {
                 lerNome(nome, sizeof(nome));
                 
                 if(!salvarRegistro(nome, player1.points, segundos)){
-                    printf("Não foi possivel salvar o ranking.\n")
+                    printf("Não foi possivel salvar o ranking.\n");
                 }
 
                 exibirRanking();
