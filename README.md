@@ -78,10 +78,10 @@ Q: Sair do jogo
 
 ## Integrantes: 
 
-Daniel Matos Oitaven - 27805
+Daniel Matos Oitaven - 27805 (FireCodingdev)
 
-Rubens Nunes Araújo - 27903
+Rubens Nunes Araújo - 27903 (rubensbdt)
 
-Pedro Iresi Alves Santos - 27657
+Pedro Iresi Alves Santos - 27657 (Iresi22)
 
-Jorge Luís Monken Lira - 28434
+Jorge Luís Monken Lira - 28434 (JorgeLuisCyber)
