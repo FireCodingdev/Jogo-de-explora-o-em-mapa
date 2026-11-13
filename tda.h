@@ -8,6 +8,10 @@
 #define LINHAS 23
 #define COLUNAS 20
 
+#define ARQUIVO_RANKING "ranking.txt"
+#define MAX_RANKING 10
+#define TAM_NOME 20
+
 #ifdef _WIN32
 
     #include <conio.h>
