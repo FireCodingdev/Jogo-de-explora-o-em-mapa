@@ -4,6 +4,11 @@
 #include <time.h>
 #include "tda.h"
 
+#define ARQUIVO_RANKING "ranking.txt"
+#define MAX_RANKING 10
+#define TAM_NOME 20
+
+
 int main(void) {
 
     Player player1;
